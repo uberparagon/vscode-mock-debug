@@ -173,7 +173,11 @@ export class MockDebugSession extends LoggingDebugSession {
 
 	protected setBreakPointsRequest(response: DebugProtocol.SetBreakpointsResponse, args: DebugProtocol.SetBreakpointsArguments): void {
 
-		const path = <string>args.source.path;
+		var path = <string>args.source.path;
+		//Because this confuses the debugger
+		if (path[0]==='c'){
+			path='C' + path.slice(1);
+		}
 		const clientLines = args.lines || [];
 
 		// clear all breakpoints for this file
